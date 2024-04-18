@@ -10,10 +10,11 @@ public:
             else return;
         }
         if(sum>target) return;
+        find(candidates,target,sum,ans,i+1,n,temp);
         temp.push_back(candidates[i]);
         find(candidates,target,sum+candidates[i],ans,i,n,temp);
-        temp.pop_back();
-        find(candidates,target,sum,ans,i+1,n,temp);
+        // temp.pop_back();
+        
         
         
     }
