@@ -7,26 +7,24 @@ public:
             dp[i][0]=true;
         }
         if(nums[0]<=k){
-            dp[0][nums[0]]=true;
-        }
+        dp[0][nums[0]]=true; }
         for(int i=1;i<n;i++){
-            for(int j=1;j<=k;j++){
-                bool ntake= dp[i-1][j];
-                bool take=false;
-                if(nums[i]<=j){
-                    take=dp[i-1][j-nums[i]];
-                }
-                dp[i][j]=take|ntake;
-            }
+            for(int t=1;t<=k;t++){
+                int pick=false;
+                if(nums[i]<=t) pick=dp[i-1][t-nums[i]];
+            
+            int nott=dp[i-1][t];
+            dp[i][t]= pick|nott;
+        }
         }
         return dp[n-1][k];
     }
-    
     bool canPartition(vector<int>& nums) {
-        int sum=accumulate(nums.begin(),nums.end(),0);
-        if(sum%2!=0) return false;
-        int s1=sum/2;
-        bool ans=find(nums,s1);
-        return ans;
+        int totsum=0;
+        for(int i=0;i<nums.size();i++){
+            totsum+=nums[i];
+        }
+        if(totsum%2) return false;
+        else return find(nums,totsum/2);
     }
 };
