@@ -1,18 +1,18 @@
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums) {
-        vector<int> ans;
-        ans.push_back(nums[0]);
-        int l=1;    
-        for(int i=1;i<nums.size();i++){
-            if(nums[i]>ans.back()){
-                ans.push_back(nums[i]);
-            }
-            else{
-                int indx=lower_bound(ans.begin(),ans.end(),nums[i])-ans.begin();
-                ans[indx]=nums[i];
-            }
+    int find(vector<int>&nums,int n,int i,int prev, vector<vector<int>>&dp){
+        if(i==n) return 0;
+        if(dp[i][prev+1]!=-1) return dp[i][prev+1];
+        int pick=0;
+        int nott=find(nums,n,i+1,prev,dp);
+        if(prev==-1||nums[prev]<nums[i]){
+            pick=1+ find(nums,n,i+1,i,dp);
         }
-        return ans.size();
+        return dp[i][prev+1]=max(pick,nott);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>dp(n,vector<int>(n+1,-1));
+        return find(nums,n,0,-1,dp);
     }
 };
