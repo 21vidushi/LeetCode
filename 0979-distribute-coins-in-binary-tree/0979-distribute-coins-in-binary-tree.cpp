@@ -11,16 +11,16 @@
  */
 class Solution {
 public:
-    int ans=0;
-    int find(TreeNode* root){
+    int steps=0;
+    int func(TreeNode* root){
         if(root==NULL) return 0;
-        int l=find(root->left);
-        int r=find(root->right);
-        ans+=abs(l)+abs(r);
-        return (l+r+root->val-1);
+        int left= func(root->left);
+        int right=func(root->right);
+        steps+= abs(left) +abs(right);
+        return left+right+root->val-1;
     }
     int distributeCoins(TreeNode* root) {
-        find(root);
-        return ans;
+        func(root);
+        return steps;
     }
 };
