@@ -12,7 +12,24 @@ public:
         
     }
     int checkRecord(int n) {
-    vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,-1)));
-        return int(find(n,0,0,dp));
+    vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
+        for(int ac=0;ac<=1;ac++){
+            for(int clc=0;clc<=2;clc++){
+                dp[0][ac][clc]=1;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            for(int ac=0;ac<=1;ac++){
+                for(int clc=0;clc<=2;clc++){
+                    long long ans=0;
+                    ans= dp[i-1][ac][0];
+                    if(ac<1) ans+=dp[i-1][ac+1][0];
+                    if(clc<2) ans+=dp[i-1][ac][clc+1];
+                    dp[i][ac][clc]= ans%mod;
+                    
+                }
+            }
+        }
+        return dp[n][0][0];
     }
 };
